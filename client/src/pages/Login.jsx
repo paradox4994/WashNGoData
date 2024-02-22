@@ -1,11 +1,13 @@
-import {useState} from 'react'
+import {useState, useContext } from 'react'
 import axios from 'axios'
 import {toast} from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../../context/userContext'
 
 export default function Login() {
 
   const navigate = useNavigate()
+  const { dispatch } = useContext(UserContext);
 
   const [data, setData] = useState({
     email: '',
@@ -24,6 +26,9 @@ export default function Login() {
         toast.error(data.error)
       }
       else{
+        //Update auth context
+        console.log("From Login",data)
+        dispatch({type: 'LOGIN', payload: {...data}})
         setData({})
         navigate('/dashboard')
       }

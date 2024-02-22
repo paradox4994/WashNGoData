@@ -1,10 +1,34 @@
-import axios from 'axios'
-import { createContext, useState, useEffect } from 'react'
+import axios from 'axios';
+import { createContext, useReducer } from 'react';
 
-export const UserContext = createContext({})
+export const UserContext = createContext({});
 
-export function UserContextProvider({children}){
-    const [user, setUser] = useState(null);
+export const userReducer = (state, action) => {
+  switch (action.type) {
+    case 'LOGIN':
+      return { ...action.payload };
+    case 'LOGOUT':
+      return {};
+    default:
+      return state;
+  }
+};
+
+export function UserContextProvider({ children }) {
+  const [state, dispatch] = useReducer(userReducer, {});
+
+  console.log("Fron Reducer",state)
+
+  return (
+    <UserContext.Provider value={{ ...state, dispatch }}>
+      {children}
+    </UserContext.Provider>
+  );
+}
+
+/*
+
+const [user, setUser] = useState(null);
     useEffect(() => {
         if(!user){
             axios.get('/profile').then(({data}) => {
@@ -17,4 +41,5 @@ export function UserContextProvider({children}){
             {children}
         </UserContext.Provider>
     )
-}
+
+*/
