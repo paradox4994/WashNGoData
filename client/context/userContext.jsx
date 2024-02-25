@@ -1,45 +1,27 @@
-import axios from 'axios';
-import { createContext, useReducer } from 'react';
+import axios from "axios";
+import { createContext, useState, useEffect } from "react";
 
 export const UserContext = createContext({});
 
-export const userReducer = (state, action) => {
-  switch (action.type) {
-    case 'LOGIN':
-      return { ...action.payload };
-    case 'LOGOUT':
-      return {};
-    default:
-      return state;
-  }
-};
-
 export function UserContextProvider({ children }) {
-  const [state, dispatch] = useReducer(userReducer, {});
-
-  console.log("Fron Reducer",state)
-
+  const [user, setUser] = useState(null);
+  
   return (
-    <UserContext.Provider value={{ ...state, dispatch }}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );
 }
 
 /*
-
-const [user, setUser] = useState(null);
-    useEffect(() => {
-        if(!user){
-            axios.get('/profile').then(({data}) => {
-                setUser(data)
-            })
-        }
-    },[])
-    return(
-        <UserContext.Provider value={{user, setUser}}>
-            {children}
-        </UserContext.Provider>
-    )
-
+if (!user) {
+      axios
+        .get("/profile")
+        .then(({ data }) => {
+          setUser(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+    }
 */

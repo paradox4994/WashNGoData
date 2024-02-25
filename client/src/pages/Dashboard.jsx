@@ -1,13 +1,44 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../../context/userContext";
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
+
 
 export default function Dashboard() {
-  const { user } = useContext(UserContext);
-  console.log("From Dashboard:", user); // Check if user data is available
+  const { user, setUser } = useContext(UserContext);
+
+  const navigate = useNavigate()
+  
+  const logoutUser = () => {
+    setUser(null)
+    navigate('/login')
+  }
+
+  useEffect(() => {
+    if (!user) {
+      axios
+        .get("/profile")
+        .then(({ data }) => {
+          setUser(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching user profile:", error);
+        });
+    }
+  },[])
+
   return (
     <div>
       <h1>Dashbaord</h1>
-      {user ? <h2>Hi {user.name} </h2> : <p>Loading user data...</p>}
+      {user ? (
+        <>
+          <h2>Hi {user.name} </h2>
+          <button onClick={logoutUser}>Logout</button>
+        </>
+      ) : (
+        <p>Loading user data...</p>
+      )}
     </div>
   );
 }
