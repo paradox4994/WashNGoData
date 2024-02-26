@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { UserContext } from "../../context/userContext";
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Button from '@mui/material/Button';
 
 
 
@@ -34,7 +35,7 @@ export default function Dashboard() {
       {user ? (
         <>
           <h2>Hi {user.name} </h2>
-          <button onClick={logoutUser}>Logout</button>
+          <Button variant="contained" onClick={logoutUser}>Logout</Button>
         </>
       ) : (
         <p>Loading user data...</p>
