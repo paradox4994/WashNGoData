@@ -11,11 +11,6 @@ export default function Dashboard() {
 
   const navigate = useNavigate()
   
-  const logoutUser = () => {
-    setUser(null)
-    navigate('/login')
-  }
-
   useEffect(() => {
     if (!user) {
       axios
@@ -35,7 +30,6 @@ export default function Dashboard() {
       {user ? (
         <>
           <h2>Hi {user.name} </h2>
-          <Button variant="contained" onClick={logoutUser}>Logout</Button>
         </>
       ) : (
         <p>Loading user data...</p>

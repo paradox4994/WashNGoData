@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
 import { Link, useNavigate } from "react-router-dom";
 
 // MUI Imports
@@ -16,7 +18,14 @@ const pages = ["Products", "Pricing", "Blog"];
 
 export default function Navbar() {
 
+  const { user, setUser } = useContext(UserContext);
+
   const navigate = useNavigate()
+
+  const logoutUser = () => {
+    setUser(null)
+    navigate('/login')
+  }
 
   return (
       <AppBar position="static">
@@ -52,12 +61,20 @@ export default function Navbar() {
             </Button>
           </Container>
           <Container sx={{display: "flex", justifyContent: "flex-end"}}>
-            <Button variant="contained" color="success" sx={{mx: 1}} onClick={() => {navigate('/login')}}>
+            {user?(
+              <Button variant="contained" color="success" sx={{mx: 1}} onClick={logoutUser}>
+              Logout
+            </Button>
+            ):(<>
+              <Button variant="contained" color="success" sx={{mx: 1}} onClick={() => {navigate('/login')}}>
               Login
             </Button>
             <Button variant="contained" color='error' sx={{mx: 1}} onClick={() => {navigate('/register')}}>
               Sign up
             </Button>
+            </>
+            )}
+            
           </Container>
         </Toolbar>
       </AppBar>
