@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser')
 const app = express();
 
 // Database Connection
-mongoose.connect(process.env.MONGO_URL).then(() => console.log('Database Connected')).catch((err)=> console.log('Database Not Connected',err))
+mongoose.connect(process.env.MONGO_URL_LOCAL).then(() => console.log('Database Connected')).catch((err)=> console.log('Database Not Connected',err))
 
 // Middleware
 app.use(express.json())
