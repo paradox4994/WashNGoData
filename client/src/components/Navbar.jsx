@@ -61,6 +61,11 @@ export default function Navbar() {
             </Button>
           </Container>
           <Container sx={{display: "flex", justifyContent: "flex-end"}}>
+            {user && user.role === "admin"?(
+              <Button variant="contained" color="warning" sx={{mx: 1}}>
+                Admin
+              </Button>
+            ):(null)}
             {user?(
               <Button variant="contained" color="success" sx={{mx: 1}} onClick={logoutUser}>
               Logout
