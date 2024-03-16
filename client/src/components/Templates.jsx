@@ -1,4 +1,5 @@
 import {React, useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 // Materials Import
@@ -9,6 +10,8 @@ import AddIcon from "@mui/icons-material/Add";
 
 
 export default function Templates() {
+
+  const navigate = useNavigate()
 
   const [template, setTemplate] = useState([])
 
@@ -28,7 +31,7 @@ async function LoadTemplate() {
 }
 
   const AddTemplate = async () => {
-    console.log("Template Added")
+    navigate('/newTemplate')
   };
 
   return (
