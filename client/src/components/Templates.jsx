@@ -1,4 +1,5 @@
-import React from 'react'
+import {React, useState, useEffect} from 'react'
+import axios from 'axios';
 
 // Materials Import
 import { Button, Container, Box, Stack, Typography } from "@mui/material";
@@ -6,27 +7,42 @@ import { Button, Container, Box, Stack, Typography } from "@mui/material";
 // MUI Icons
 import AddIcon from "@mui/icons-material/Add";
 
+
 export default function Templates() {
 
-  const items = [
-    { name: "Template 1", date: "1/1/2024" },
-    { name: "Template 2", date: "11/11/2024" },
-    { name: "Template 3", date: "99/99/9999" },
-    { name: "Template 4", date: "1/1/2024" },
-  ];
+  const [template, setTemplate] = useState([])
+
+  const items = [];
+
+useEffect(() => {
+  LoadTemplate();
+}, [template]);
+
+async function LoadTemplate() {
+  try {
+    const res = await axios.get("/template");
+    setTemplate(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+  const AddTemplate = async () => {
+    console.log("Template Added")
+  };
 
   return (
     <>
       <Stack direction="row">
         <Typography variant="h4" sx={{px: 2, mt: 1}}>Templates</Typography>
         <Box sx={{ml: "auto", px: 2, mt: 1}}>
-          <Button variant="contained" color="success" startIcon={<AddIcon />}>
+          <Button variant="contained" color="success" startIcon={<AddIcon />} onClick={AddTemplate}>
             Templates
           </Button>
         </Box>
       </Stack>
       <Stack spacing={2} sx={{ px: 2, mt: 2 }}>
-        {items.map((item) => (
+        {template.map((item) => (
           <Box
             key={item.name}
             sx={{
