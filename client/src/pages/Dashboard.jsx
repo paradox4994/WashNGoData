@@ -2,6 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Projects from "../components/Projects";
+import Templates from "../components/Templates";
+import TemplateStore from "../components/TemplateStore";
 
 // MUI Imports
 import {
@@ -18,9 +21,7 @@ import {
 import ShopRoundedIcon from '@mui/icons-material/ShopRounded';
 import LibraryAddRoundedIcon from '@mui/icons-material/LibraryAddRounded';
 import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
-import Projects from "../components/Projects";
-import Templates from "../components/Templates";
-import TemplateStore from "../components/TemplateStore";
+
 
 export default function Dashboard() {
 
