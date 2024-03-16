@@ -31,7 +31,7 @@ async function LoadTemplate() {
 }
 
   const AddTemplate = async () => {
-    navigate('/newTemplate')
+    navigate('/newtemplate')
   };
 
   return (
