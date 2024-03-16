@@ -1,10 +1,21 @@
 tutorial: {
-    title: Login and Register
-    tech: MERN, bycrypy, jwt
-    link: https://www.youtube.com/watch?v=XPC81RWOItI
-    timestamps:{
-        1 -> 10:53
+
+    {
+        title: Login and Register
+        tech: MERN, bycrypy, jwt
+        link: https://www.youtube.com/watch?v=XPC81RWOItI
+        timestamps:{
+            1 -> 10:53
+        }
+    },
+    {
+        title: Table
+        tech: TanStack Table
+        link: https://www.youtube.com/watch?v=CjqG277Hmgg
     }
+    
+
+
     
 }
 
