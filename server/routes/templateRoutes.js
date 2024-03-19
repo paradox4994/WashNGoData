@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const cors = require('cors')
-const {templates} = require('../controllers/templateControllers')
+const {templates, saveTemplate, viewTemplate} = require('../controllers/templateControllers')
 
 //Middleware
 router.use(
@@ -11,5 +11,7 @@ router.use(
     })
 )
 
-router.get('/', templates)
+router.post('/', templates)
+router.post('/savetemplate', saveTemplate)
+router.post('/viewtemplate', viewTemplate)
 module.exports = router
