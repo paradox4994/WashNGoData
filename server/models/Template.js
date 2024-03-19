@@ -1,15 +1,23 @@
-const mongoose = require('mongoose')
-const {Schema} = mongoose
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
+
+const columnSchema = new Schema({
+  fieldValue: { type: String, required: true },
+  description: String,
+  unit: String,
+});
 
 const templateSchema = new Schema({
-    name: String,
-    creator: String,
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-})
+  name: { type: String, required: true },
+  description: String,
+  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  columns: [columnSchema]
+});
 
-const TemplateModel = mongoose.model('Template',templateSchema)
+const TemplateModel = mongoose.model("Template", templateSchema);
 
-module.exports = TemplateModel
+module.exports = TemplateModel;
