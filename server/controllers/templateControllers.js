@@ -1,10 +1,41 @@
+const User = require("../models/user");
+const Template = require("../models/Template");
 
+const templates = async (req, res) => {
 
-const templates = (req, res) => {
-    const test = [{"name": "Template 1", "date": "10/10/3014"},{"name": "Template 2", "date": "99/99/9999"}]
-    res.json(test)
+    const {userID} = req.body
+
+    const user = await User.findById(userID);
+
+    try {
+        const template = await Template.find({userId: user._id})
+        res.json(template);
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+const saveTemplate = async (req, res) => {
+  const { name, description, userId, columns } = req.body;
+
+  try {
+    const template = await Template.create({
+      name,
+      description,
+      userId,
+      columns,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const viewTemplate = async (req,res) => {
+    res.json("template")
 }
 
 module.exports = {
-    templates
-}
+  templates,
+  saveTemplate,
+  viewTemplate
+};
