@@ -15,15 +15,17 @@ export default function Templates() {
 
   const [template, setTemplate] = useState([])
 
-  const items = [];
-
 useEffect(() => {
   LoadTemplate();
-}, [template]);
+}, []);
 
 async function LoadTemplate() {
   try {
-    const res = await axios.get("/template");
+
+    const resp = await axios.get("/profile")
+    const user = {"userID" : resp.data.id}
+
+    const res = await axios.post("/template",user);
     setTemplate(res.data);
   } catch (error) {
     console.log(error);
@@ -33,6 +35,14 @@ async function LoadTemplate() {
   const AddTemplate = async () => {
     navigate('/newtemplate')
   };
+
+  const onViewClicked = (id) => {
+    navigate('/viewtemplate',{
+      state: {
+        userId: id,
+      }
+    })
+  }
 
   return (
     <>
@@ -47,7 +57,7 @@ async function LoadTemplate() {
       <Stack spacing={2} sx={{ px: 2, mt: 2 }}>
         {template.map((item) => (
           <Box
-            key={item.name}
+            key={item._id}
             sx={{
               backgroundColor: "#eaeaea",
               borderRadius: 1.2,
@@ -60,10 +70,10 @@ async function LoadTemplate() {
                 <Typography variant="h5" sx={{ p: 1 }}>
                   {item.name}
                 </Typography>
-                <Typography sx={{ px: 1, pb: 1 }}>{item.date}</Typography>
+                <Typography sx={{ px: 1, pb: 1 }}>{item.createdAt.slice(0,10)}</Typography>
               </Container>
               <Box sx={{ p: 2 }}>
-                <Button variant="contained">View</Button>
+                <Button variant="contained" onClick={() => {onViewClicked(item._id)}}>View</Button>
               </Box>
               <Box sx={{ p: 2 }}>
                 <Button variant="outlined" color="error">
