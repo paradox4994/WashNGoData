@@ -31,7 +31,7 @@ const saveTemplate = async (req, res) => {
 };
 
 const viewTemplate = async (req,res) => {
-    res.json("template")
+    res.json("template sent by ekansh")
 }
 
 module.exports = {
