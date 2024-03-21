@@ -34,6 +34,10 @@ const viewTemplate = async (req,res) => {
     res.json("template")
 }
 
+const deleteTemplate = async (req,res) => {
+  res.json("Delete Template")
+}
+
 module.exports = {
   templates,
   saveTemplate,
