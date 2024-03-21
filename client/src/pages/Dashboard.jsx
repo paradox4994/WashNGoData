@@ -76,7 +76,7 @@ export default function Dashboard() {
                     <ListItemIcon>
                       <ShopRoundedIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Template Store" />
+                    <ListItemText primary="Default Templates" />
                   </ListItemButton>
                 </ListItem>
               </List>
