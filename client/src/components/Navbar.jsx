@@ -59,6 +59,15 @@ export default function Navbar() {
               Contact
             </Typography>
             </Button>
+            {
+              user?(
+                <Button variant="text" sx={{color:"inherit"}} onClick={() => navigate("/dashboard")}>
+            <Typography>
+              Dashboard
+            </Typography>
+            </Button>
+              ):(null)
+            }
           </Container>
           <Container sx={{display: "flex", justifyContent: "flex-end"}}>
             {user && user.role === "admin"?(
