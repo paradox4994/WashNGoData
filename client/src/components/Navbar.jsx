@@ -86,7 +86,7 @@ export default function Navbar() {
               <Button
                 variant="text"
                 sx={{ color: "inherit", mr: 0, pr: 0 }}
-                onClick={() => navigate("/dashboard")}
+                onClick={() => navigate("/dashboard",{state:{pageNumber: 1}})}
               >
                 <Typography>Dashboard</Typography>
               </Button>
