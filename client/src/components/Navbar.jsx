@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie'
 
 // MUI Imports
 import {
@@ -16,8 +17,6 @@ import {
   MenuItem,
 } from "@mui/material";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
-
-const pages = ["Products", "Pricing", "Blog"];
 
 export default function Navbar() {
   const { user, setUser } = useContext(UserContext);
@@ -35,6 +34,7 @@ export default function Navbar() {
 
   const logoutUser = () => {
     setUser(null);
+    Cookies.remove('token')
     navigate("/login");
   };
 
