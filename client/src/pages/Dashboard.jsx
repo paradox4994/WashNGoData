@@ -5,6 +5,7 @@ import axios from "axios";
 import Projects from "../components/Projects";
 import Templates from "../components/Templates";
 import TemplateStore from "../components/TemplateStore";
+import { useLocation } from 'react-router-dom'
 
 // MUI Imports
 import {
@@ -25,8 +26,10 @@ import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';
 
 export default function Dashboard() {
 
+  const location = useLocation();
+  
   const { user, setUser } = useContext(UserContext);
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(location.state.pageNumber)
 
   const navigate = useNavigate();
 
@@ -42,6 +45,10 @@ export default function Dashboard() {
         });
     }
   }, []);
+
+  useEffect(() => {
+    setPage(location.state.pageNumber)
+  },[location.state.pageNumber])
 
   const handlePageChange = (pageNumber) => {
     setPage(pageNumber)
