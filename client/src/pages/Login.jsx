@@ -54,7 +54,9 @@ export default function Login() {
       }
       else{
         setData({})
-        navigate('/dashboard')
+        navigate('/dashboard',{state:{
+          pageNumber: 1
+        }})
       }
     } catch (error) {
       console.log(error)
