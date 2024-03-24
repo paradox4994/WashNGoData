@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ColumnComponent from "../../components/ColumnComponent";
 import {toast} from 'react-hot-toast'
+import { useNavigate } from "react-router-dom";
 
 //MUI Imports
 import { Button, Container, Stack, TextField, Typography } from "@mui/material";
@@ -8,6 +9,9 @@ import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 
 export default function NewTemplate() {
+
+  const navigate = useNavigate();
+
   const [columnComponents, setColumnComponents] = useState([
     { fieldValue: "", description: "", unit: "" },
   ]);
@@ -59,7 +63,14 @@ export default function NewTemplate() {
         "columns": columnComponents 
       }
 
-      await axios.post('/template/savetemplate',data)
+      await axios.post('/template/savetemplate',data).then(
+        toast.success("Template Saved"),
+        navigate("/dashboard",{state:{pageNumber: 2}})
+      )
+
+      
+
+      
 
     } catch (error) {
       console.log(error)
