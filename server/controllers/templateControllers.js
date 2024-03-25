@@ -42,7 +42,11 @@ const saveTemplate = async (req, res) => {
 };
 
 const viewTemplate = async (req,res) => {
-    res.json("template sent by ekansh")
+  const {id} = req.body
+  const userTemplate = await Template.findById(id)
+  res.json({
+    template: userTemplate
+  })
 }
 
 const deleteTemplate = async (req,res) => {
@@ -58,9 +62,29 @@ const deleteTemplate = async (req,res) => {
   }
 }
 
+const updateTemplate = async (req,res) => {
+  const { id, name, description, userId, columns } = req.body;
+
+  const data = {
+    name,
+    description,
+    userId,
+    columns
+  }
+
+  try {
+
+    await Template.findByIdAndUpdate(id,data)
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   templates,
   saveTemplate,
   viewTemplate,
-  deleteTemplate
+  deleteTemplate,
+  updateTemplate
 };

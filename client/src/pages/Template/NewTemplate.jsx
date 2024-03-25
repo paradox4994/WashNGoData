@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import ColumnComponent from "../../components/ColumnComponent";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 //MUI Imports
 import { Button, Container, Stack, TextField, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import axios from "axios";
+
 
 export default function NewTemplate() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function NewTemplate() {
   ]);
 
   const [projectName, setProjectName] = useState("");
-  const [projectDiscription, setProjectDiscription] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
 
   const onAddButtonClick = () => {
     setColumnComponents([
@@ -28,7 +29,7 @@ export default function NewTemplate() {
   const onResetButtonClick = () => {
     setColumnComponents([{ fieldValue: "", description: "", unit: "" }]);
     setProjectName("");
-    setProjectDiscription("");
+    setProjectDescription("");
   };
 
   const handleFormChange = (index, e) => {
@@ -48,8 +49,8 @@ export default function NewTemplate() {
       toast.error("Project name cannot be empty");
       return;
     }
-    if (projectDiscription === "") {
-      toast.error("Project discription cannot be empty");
+    if (projectDescription === "") {
+      toast.error("Project description cannot be empty");
       return;
     }
     try {
@@ -57,7 +58,7 @@ export default function NewTemplate() {
 
       const data = {
         name: projectName,
-        description: projectDiscription,
+        description: projectDescription,
         userId: user.data.id,
         columns: columnComponents,
       };
@@ -105,12 +106,12 @@ export default function NewTemplate() {
             fullWidth
             id="outlined-multiline-static"
             multiline
-            label="Discription"
-            name="discription"
+            label="Description"
+            name="description"
             rows={4}
             sx={{ mt: 3, mb: 3 }}
-            value={projectDiscription}
-            onChange={(e) => setProjectDiscription(e.target.value)}
+            value={projectDescription}
+            onChange={(e) => setProjectDescription(e.target.value)}
           />
           <Container sx={{ mb: 3 }} component="div">
             <Button
