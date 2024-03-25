@@ -1,5 +1,6 @@
 import {React, useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
+import {toast} from 'react-hot-toast'
 import axios from 'axios';
 
 // Materials Import
@@ -17,7 +18,7 @@ export default function Templates() {
 
 useEffect(() => {
   LoadTemplate();
-}, []);
+}, [template]);
 
 async function LoadTemplate() {
   try {
@@ -44,6 +45,15 @@ async function LoadTemplate() {
     })
   }
 
+  const onDeleteClicked = async (id) => {
+    try {
+      const res = await axios.post('/template/deletetemplate',{"id":id})
+      toast.success(res.data.message)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <Stack direction="row">
@@ -55,34 +65,38 @@ async function LoadTemplate() {
         </Box>
       </Stack>
       <Stack spacing={2} sx={{ px: 2, mt: 2 }}>
-        {template.map((item) => (
-          <Box
-            key={item._id}
-            sx={{
-              backgroundColor: "#eaeaea",
-              borderRadius: 1.2,
-              boxShadow: 1,
-              px: 1,
-            }}
-          >
-            <Stack direction="row">
-              <Container>
-                <Typography variant="h5" sx={{ p: 1 }}>
-                  {item.name}
-                </Typography>
-                <Typography sx={{ px: 1, pb: 1 }}>{item.createdAt.slice(0,10)}</Typography>
-              </Container>
-              <Box sx={{ p: 2 }}>
-                <Button variant="contained" onClick={() => {onViewClicked(item._id)}}>View</Button>
-              </Box>
-              <Box sx={{ p: 2 }}>
-                <Button variant="outlined" color="error">
-                  Delete
-                </Button>
-              </Box>
-            </Stack>
-          </Box>
-        ))}
+        {template.length == 0?(
+          <Typography variant='h7' sx={{display: "flex", justifyContent:"center", alignContent: "center"}}>No Templates Found</Typography>
+        ):(
+          template.map((item) => (
+            <Box
+              key={item._id}
+              sx={{
+                backgroundColor: "#eaeaea",
+                borderRadius: 1.2,
+                boxShadow: 1,
+                px: 1,
+              }}
+            >
+              <Stack direction="row">
+                <Container>
+                  <Typography variant="h5" sx={{ p: 1 }}>
+                    {item.name}
+                  </Typography>
+                  <Typography sx={{ px: 1, pb: 1 }}>{item.createdAt.slice(0,10)}</Typography>
+                </Container>
+                <Box sx={{ p: 2 }}>
+                  <Button variant="contained" onClick={() => {onViewClicked(item._id)}}>View</Button>
+                </Box>
+                <Box sx={{ p: 2 }}>
+                  <Button variant="outlined" color="error" onClick={() => {onDeleteClicked(item._id)}}>
+                    Delete
+                  </Button>
+                </Box>
+              </Stack>
+            </Box>
+          ))
+        )}
       </Stack>
     </>
   )
