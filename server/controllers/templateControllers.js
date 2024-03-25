@@ -35,11 +35,21 @@ const viewTemplate = async (req,res) => {
 }
 
 const deleteTemplate = async (req,res) => {
-  res.json("Delete Template")
+  const {id} = req.body
+  const deletedTemplate = await Template.findByIdAndDelete(id);
+
+  if(!deletedTemplate){
+    res.json({"message": "Template Not Deleted"})
+  }
+
+  if(deletedTemplate){
+    res.json({"message": "Template Deleted"})
+  }
 }
 
 module.exports = {
   templates,
   saveTemplate,
-  viewTemplate
+  viewTemplate,
+  deleteTemplate
 };
