@@ -29,12 +29,12 @@ export default function ColumnComponent ({vals, handleFormChange,index,removeFie
         <TextField
           margin="normal"
           id="outlined-multiline-flexible"
-          label="Discription"
+          label="Description"
           name="description"
           multiline
           maxRows={1}
           sx={{mb: 2, ml: 3}}
-          value={vals.discription}
+          value={vals.description}
           onChange={(e) => handleFormChange(index,e)}
         />
         <TextField

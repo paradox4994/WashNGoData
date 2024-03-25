@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import ColumnComponent from "../../components/ColumnComponent";
-import {toast} from 'react-hot-toast'
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 //MUI Imports
 import { Button, Container, Stack, TextField, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import axios from "axios";
+
 
 export default function NewTemplate() {
-
   const navigate = useNavigate();
 
   const [columnComponents, setColumnComponents] = useState([
     { fieldValue: "", description: "", unit: "" },
   ]);
 
-  const [projectName, setProjectName] = useState("")
-  const [projectDiscription, setProjectDiscription] = useState("")
+  const [projectName, setProjectName] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
 
   const onAddButtonClick = () => {
     setColumnComponents([
@@ -28,8 +28,8 @@ export default function NewTemplate() {
 
   const onResetButtonClick = () => {
     setColumnComponents([{ fieldValue: "", description: "", unit: "" }]);
-    setProjectName("")
-    setProjectDiscription("")
+    setProjectName("");
+    setProjectDescription("");
   };
 
   const handleFormChange = (index, e) => {
@@ -39,43 +39,41 @@ export default function NewTemplate() {
   };
 
   const removeFields = (index) => {
-    let data = [...columnComponents]
-    data.splice(index, 1)
+    let data = [...columnComponents];
+    data.splice(index, 1);
     setColumnComponents(data);
-  }
+  };
 
   const onSaveButtonClick = async () => {
-    if(projectName === ""){
-      toast.error("Project name cannot be empty")
-      return
+    if (projectName === "") {
+      toast.error("Project name cannot be empty");
+      return;
     }
-    if(projectDiscription === ""){
-      toast.error("Project discription cannot be empty")
-      return
+    if (projectDescription === "") {
+      toast.error("Project description cannot be empty");
+      return;
     }
     try {
-      const user = await axios.get("/profile")
+      const user = await axios.get("/profile");
 
       const data = {
-        "name": projectName,
-        "description": projectDiscription,
-        "userId": user.data.id,
-        "columns": columnComponents 
+        name: projectName,
+        description: projectDescription,
+        userId: user.data.id,
+        columns: columnComponents,
+      };
+
+      const res = await axios.post("/template/savetemplate", data);
+      if (res.data.error) {
+        toast.error(res.data.error);
+        return
       }
-
-      await axios.post('/template/savetemplate',data).then(
-        toast.success("Template Saved"),
-        navigate("/dashboard",{state:{pageNumber: 2}})
-      )
-
-      
-
-      
-
+      toast.success("Template Saved")
+      navigate("/dashboard", { state: { pageNumber: 2 } });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -108,12 +106,12 @@ export default function NewTemplate() {
             fullWidth
             id="outlined-multiline-static"
             multiline
-            label="Discription"
-            name="discription"
+            label="Description"
+            name="description"
             rows={4}
             sx={{ mt: 3, mb: 3 }}
-            value={projectDiscription}
-            onChange={(e) => setProjectDiscription(e.target.value)}
+            value={projectDescription}
+            onChange={(e) => setProjectDescription(e.target.value)}
           />
           <Container sx={{ mb: 3 }} component="div">
             <Button
@@ -124,7 +122,11 @@ export default function NewTemplate() {
             >
               Reset
             </Button>
-            <Button variant="contained" color="success" onClick={onSaveButtonClick}>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={onSaveButtonClick}
+            >
               Save
             </Button>
           </Container>
