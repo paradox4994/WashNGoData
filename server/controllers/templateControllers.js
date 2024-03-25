@@ -18,6 +18,12 @@ const templates = async (req, res) => {
 const saveTemplate = async (req, res) => {
   const { name, description, userId, columns } = req.body;
 
+  const exists = await Template.findOne({name})
+  if(exists){
+    return res.json({
+      error: "Template name already exists"
+  })
+  }
   try {
     const template = await Template.create({
       name,
@@ -25,6 +31,11 @@ const saveTemplate = async (req, res) => {
       userId,
       columns,
     });
+    if(template){
+      res.json({
+        message: "Template Saved"
+      })
+    }
   } catch (error) {
     console.log(error);
   }

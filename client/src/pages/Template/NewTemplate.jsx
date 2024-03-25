@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ColumnComponent from "../../components/ColumnComponent";
-import {toast} from 'react-hot-toast'
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 //MUI Imports
@@ -9,15 +9,14 @@ import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 
 export default function NewTemplate() {
-
   const navigate = useNavigate();
 
   const [columnComponents, setColumnComponents] = useState([
     { fieldValue: "", description: "", unit: "" },
   ]);
 
-  const [projectName, setProjectName] = useState("")
-  const [projectDiscription, setProjectDiscription] = useState("")
+  const [projectName, setProjectName] = useState("");
+  const [projectDiscription, setProjectDiscription] = useState("");
 
   const onAddButtonClick = () => {
     setColumnComponents([
@@ -28,8 +27,8 @@ export default function NewTemplate() {
 
   const onResetButtonClick = () => {
     setColumnComponents([{ fieldValue: "", description: "", unit: "" }]);
-    setProjectName("")
-    setProjectDiscription("")
+    setProjectName("");
+    setProjectDiscription("");
   };
 
   const handleFormChange = (index, e) => {
@@ -39,43 +38,41 @@ export default function NewTemplate() {
   };
 
   const removeFields = (index) => {
-    let data = [...columnComponents]
-    data.splice(index, 1)
+    let data = [...columnComponents];
+    data.splice(index, 1);
     setColumnComponents(data);
-  }
+  };
 
   const onSaveButtonClick = async () => {
-    if(projectName === ""){
-      toast.error("Project name cannot be empty")
-      return
+    if (projectName === "") {
+      toast.error("Project name cannot be empty");
+      return;
     }
-    if(projectDiscription === ""){
-      toast.error("Project discription cannot be empty")
-      return
+    if (projectDiscription === "") {
+      toast.error("Project discription cannot be empty");
+      return;
     }
     try {
-      const user = await axios.get("/profile")
+      const user = await axios.get("/profile");
 
       const data = {
-        "name": projectName,
-        "description": projectDiscription,
-        "userId": user.data.id,
-        "columns": columnComponents 
+        name: projectName,
+        description: projectDiscription,
+        userId: user.data.id,
+        columns: columnComponents,
+      };
+
+      const res = await axios.post("/template/savetemplate", data);
+      if (res.data.error) {
+        toast.error(res.data.error);
+        return
       }
-
-      await axios.post('/template/savetemplate',data).then(
-        toast.success("Template Saved"),
-        navigate("/dashboard",{state:{pageNumber: 2}})
-      )
-
-      
-
-      
-
+      toast.success("Template Saved")
+      navigate("/dashboard", { state: { pageNumber: 2 } });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -124,7 +121,11 @@ export default function NewTemplate() {
             >
               Reset
             </Button>
-            <Button variant="contained" color="success" onClick={onSaveButtonClick}>
+            <Button
+              variant="contained"
+              color="success"
+              onClick={onSaveButtonClick}
+            >
               Save
             </Button>
           </Container>
