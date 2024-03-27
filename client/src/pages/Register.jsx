@@ -42,6 +42,16 @@ export default function Register() {
       return
     }
 
+    function validateEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+  }
+
+    if(!validateEmail(data.email)){
+      toast.error("Invalid Email Address")
+      return
+    }
+
     if(data.password === ''){
       toast.error("Password cannot be empty")
       return
