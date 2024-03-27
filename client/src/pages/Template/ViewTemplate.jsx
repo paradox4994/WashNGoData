@@ -99,7 +99,7 @@ export default function ViewTemplate() {
             borderRadius: 3,
             boxShadow: 5,
             ml: 2,
-            my: 3,
+            mt: 3,
             width: "25%",
           }}
         >
@@ -152,11 +152,12 @@ export default function ViewTemplate() {
         <Container
           component="div"
           sx={{
-            minHeight: "100%",
+            minHeight: "80vh",
             borderRadius: 3,
             boxShadow: 5,
-            mx: 2,
-            my: 3,
+            mx: 3,
+            mt: 3,
+            mb: "auto",
           }}
         >
           {columnComponents.map((column, index) => (
@@ -171,7 +172,7 @@ export default function ViewTemplate() {
           <Container sx={{ display: "flex", justifyContent: "flex-end" }}>
             <Button
               variant="contained"
-              sx={{ mt: 3 }}
+              sx={{ mt: 3, mb: 3 }}
               startIcon={<AddIcon />}
               onClick={onAddButtonClick}
             >
