@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 // Materials Import
 import { Button, Container, Box, Stack, Typography } from "@mui/material";
@@ -7,51 +9,69 @@ import { Button, Container, Box, Stack, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 export default function Projects() {
-  const items = [
-    { name: "Project 1", date: "1/1/2024" },
-    { name: "Project 2", date: "11/11/2024" },
-    { name: "Project 3", date: "99/99/9999" },
-    { name: "Project 4", date: "1/1/2024" },
-  ];
+
+  const navigate = useNavigate();
+
+  const [project,setProject] = useState([])
+
+  useEffect(() => {
+    LoadProjects()
+  },[project])
+
+  async function LoadProjects() {
+    try {
+      const resp = await axios.get("/profile")
+      const user = {"userID" : resp.data.id}
+      const res = await axios.post("/project",user);
+      setProject(res.data);
+    } catch(error){
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <Stack direction="row">
         <Typography variant="h4" sx={{px: 2, mt: 1}}>Projects</Typography>
         <Box sx={{ml: "auto", px: 2, mt: 1}}>
-          <Button variant="contained" color="success" startIcon={<AddIcon />}>
+          <Button variant="contained" color="success" startIcon={<AddIcon />} onClick={() => {navigate('/newproject')}}>
             Projects
           </Button>
         </Box>
       </Stack>
       <Stack spacing={2} sx={{ px: 2, mt: 2 }}>
-        {items.map((item) => (
-          <Box
-            key={item.name}
-            sx={{
-              backgroundColor: "#eaeaea",
-              borderRadius: 1.2,
-              boxShadow: 1,
-              px: 1,
-            }}
-          >
-            <Stack direction="row">
-              <Container>
-                <Typography variant="h5" sx={{ p: 1 }}>
-                  {item.name}
-                </Typography>
-                <Typography sx={{ px: 1, pb: 1 }}>{item.date}</Typography>
-              </Container>
-              <Box sx={{ p: 2 }}>
-                <Button variant="contained">View</Button>
-              </Box>
-              <Box sx={{ p: 2 }}>
-                <Button variant="outlined" color="error">
-                  Delete
-                </Button>
-              </Box>
-            </Stack>
-          </Box>
-        ))}
+        {project.length == 0?(
+          <Typography variant='h7' sx={{display: "flex", justifyContent:"center", alignContent: "center"}}>No Projects Found</Typography>
+        ):(
+          project.map((item) => (
+            <Box
+              key={item.name}
+              sx={{
+                backgroundColor: "#eaeaea",
+                borderRadius: 1.2,
+                boxShadow: 1,
+                px: 1,
+              }}
+            >
+              <Stack direction="row">
+                <Container>
+                  <Typography variant="h5" sx={{ p: 1 }}>
+                    {item.name}
+                  </Typography>
+                  <Typography sx={{ px: 1, pb: 1 }}>{item.date}</Typography>
+                </Container>
+                <Box sx={{ p: 2 }}>
+                  <Button variant="contained">View</Button>
+                </Box>
+                <Box sx={{ p: 2 }}>
+                  <Button variant="outlined" color="error">
+                    Delete
+                  </Button>
+                </Box>
+              </Stack>
+            </Box>
+          ))
+        )}
       </Stack>
     </>
   );
