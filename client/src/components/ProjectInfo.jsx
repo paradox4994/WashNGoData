@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useNavigate } from 'react-router-dom';
+
 
 // MUI Imports
 import {
@@ -14,63 +16,90 @@ import {
   InputLabel,
   MenuItem,
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 export default function ProjectInfo() {
+
+  const navigate = useNavigate()
 
   const [tempList, setTempList] = useState([]);
 
   const [data, setData] = useState({
-    name: '',
-    description: '',
-    tag: '',
-    template: {}
-  })
+    name: "",
+    description: "",
+    tag: "",
+    template: {},
+    file: "",
+  });
 
-  const [saved,setSaved] = useState(false)
+  const [disabled, setDisabled] = useState(true);
 
-  const saveInfo = async(e) => {
-    const {name, description, tag, template} = data
-
-    if(data.name === ''){
-        toast.error("Name cannot be empty")
-        return
-      }
-
-      if(data.description === ''){
-        toast.error("Description cannot be empty")
-        return
-      }
-
-      if(data.tag === ''){
-        toast.error("Tag cannot be empty")
-        return
-      }
-
-      try {
-
-        const user = await axios.get("/profile");
-
-        const {data} = await axios.post('/project/saveproject',{
-          name, description, tag, templateID: template, userId: user.data.id,
-        })
-        if(data.error){
-          toast.error(data.error)
-        }else{
-          toast.success('Project Saved')
-          setSaved(true)
-        }
-      } catch (error) {
-        console.log(error)
-      }
+  const saveInfo = async (e) => {
+    if (data.name === "") {
+      toast.error("Name cannot be empty");
+      return;
     }
 
+    if (data.description === "") {
+      toast.error("Description cannot be empty");
+      return;
+    }
+
+    if (data.tag === "") {
+      toast.error("Tag cannot be empty");
+      return;
+    }
+
+    try {
+      const user = await axios.get("/profile");
+
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("description", data.description);
+      formData.append("tag", data.tag);
+      formData.append("templateID", data.template);
+      formData.append("userId", user.data.id);
+      formData.append("file", data.file);
+
+      const resp = await axios.post("/project/saveproject", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (resp.data.error) {
+        toast.error(resp.data.error);
+      } else {
+        toast.success("Project Saved");
+        navigate("/dashboard", { state: { pageNumber: 1 } });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleChange = (e) => {
-    setData({ ...data, template: e.target.value })
+    setData({ ...data, template: e.target.value });
+  };
+
+  const handleUpload = (e) => {
+    setData({ ...data, file: e.target.files[0] });
   };
 
   useEffect(() => {
     LoadTemplate();
   }, []);
+
+  useEffect(() => {
+    if (
+      data.name &&
+      data.description &&
+      data.tag &&
+      data.template &&
+      data.file
+    ) {
+      setDisabled(false);
+    }
+  }, [data]);
 
   async function LoadTemplate() {
     try {
@@ -84,8 +113,21 @@ export default function ProjectInfo() {
     }
   }
 
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
+
   return (
     <>
+      <Box sx={{ height: "10%" }}></Box>
       <Typography variant="h4" sx={{ mt: 3 }}>
         Project Information
       </Typography>
@@ -96,7 +138,6 @@ export default function ProjectInfo() {
           name="projectname"
           sx={{ mt: 3 }}
           autoFocus
-          disabled={saved}
           value={data.name}
           onChange={(e) => setData({ ...data, name: e.target.value })}
         />
@@ -108,14 +149,12 @@ export default function ProjectInfo() {
           rows={3}
           sx={{ mt: 3 }}
           value={data.description}
-          disabled={saved}
           onChange={(e) => setData({ ...data, description: e.target.value })}
         />
         <TextField
           id="outlined-required"
           label="Tag"
           name="tagname"
-          disabled={saved}
           sx={{ mt: 3 }}
           value={data.tag}
           onChange={(e) => setData({ ...data, tag: e.target.value })}
@@ -126,7 +165,6 @@ export default function ProjectInfo() {
             labelId="template-select-label"
             id="template-select"
             defaultValue=""
-            disabled={saved}
             value={data.template}
             label="Template"
             onChange={handleChange}
@@ -138,7 +176,22 @@ export default function ProjectInfo() {
             ))}
           </Select>
         </FormControl>
-        <Button sx={{ mt: 3 }} disabled={saved} variant="outlined" onClick={saveInfo}>Save</Button>
+        <TextField
+          id="file-upload"
+          type="file"
+          variant="outlined"
+          onChange={handleUpload}
+          fullWidth
+          sx={{ mt: 3 }}
+        />
+        <Button
+          sx={{ mt: 3 }}
+          disabled={disabled}
+          variant="contained"
+          onClick={saveInfo}
+        >
+          Save
+        </Button>
       </Box>
     </>
   );
