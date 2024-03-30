@@ -11,7 +11,6 @@ import NewTemplate from './pages/Template/NewTemplate'
 import ViewTemplate from './pages/Template/ViewTemplate'
 import NewProject from './pages/Project/NewProject'
 import ViewProject from './pages/Project/VIewProject'
-import { TableContext, TableContextProvider } from '../context/tableContext'
 
 axios.defaults.baseURL = 'http://localhost:8000'
 axios.defaults.withCredentials = true
@@ -20,7 +19,6 @@ function App() {
 
   return (
     <UserContextProvider>
-      <TableContextProvider>
       <Navbar/>
       <Toaster toastOptions={{duration: 2000}}/>
       <Routes>
@@ -33,7 +31,6 @@ function App() {
           <Route path='/newproject' element={<NewProject/>}/>
           <Route path='/viewproject' element={<ViewProject/>}/>
       </Routes>
-      </TableContextProvider>
     </UserContextProvider>
   )
 }
