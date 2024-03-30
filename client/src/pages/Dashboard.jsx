@@ -56,7 +56,7 @@ export default function Dashboard() {
 
 
   return (
-    <div>
+    <>
       {user ? (
         <>
           <Grid container sx={{pt: 1, pl: 1}}>
@@ -98,6 +98,6 @@ export default function Dashboard() {
       ) : (
         <p>Loading user data...</p>
       )}
-    </div>
+    </>
   );
 }

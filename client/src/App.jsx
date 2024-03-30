@@ -9,6 +9,8 @@ import { UserContextProvider } from '../context/userContext'
 import Dashboard from './pages/Dashboard'
 import NewTemplate from './pages/Template/NewTemplate'
 import ViewTemplate from './pages/Template/ViewTemplate'
+import NewProject from './pages/Project/NewProject'
+import ViewProject from './pages/Project/VIewProject'
 
 axios.defaults.baseURL = 'http://localhost:8000'
 axios.defaults.withCredentials = true
@@ -26,6 +28,8 @@ function App() {
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/newtemplate' element={<NewTemplate/>}/>
         <Route path='/viewtemplate' element={<ViewTemplate/>}/>
+          <Route path='/newproject' element={<NewProject/>}/>
+          <Route path='/viewproject' element={<ViewProject/>}/>
       </Routes>
     </UserContextProvider>
   )
