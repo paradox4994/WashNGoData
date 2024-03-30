@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import toast from "react-hot-toast";
 
 // Materials Import
 import { Button, Container, Box, Stack, Typography } from "@mui/material";
@@ -27,6 +28,23 @@ export default function Projects() {
     } catch(error){
       console.log(error)
     }
+  }
+
+  const onDeleteClicked = async (id) => {
+    try {
+      const res = await axios.post('/project/deleteproject',{"id":id})
+      toast.success(res.data.message)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const onViewClicked = async (id) => {
+    navigate('/viewproject',{
+      state: {
+        userId: id,
+      }
+    })
   }
 
   return (
@@ -58,13 +76,13 @@ export default function Projects() {
                   <Typography variant="h5" sx={{ p: 1 }}>
                     {item.name}
                   </Typography>
-                  <Typography sx={{ px: 1, pb: 1 }}>{item.date}</Typography>
+                  <Typography sx={{ px: 1, pb: 1 }}>{item.createdAt.slice(0,10)}</Typography>
                 </Container>
                 <Box sx={{ p: 2 }}>
-                  <Button variant="contained">View</Button>
+                  <Button variant="contained" onClick={() => {onViewClicked(item._id)}}>View</Button>
                 </Box>
                 <Box sx={{ p: 2 }}>
-                  <Button variant="outlined" color="error">
+                  <Button variant="outlined" color="error" onClick={() => {onDeleteClicked(item._id)}}>
                     Delete
                   </Button>
                 </Box>
