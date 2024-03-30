@@ -11,6 +11,9 @@ const ProjectSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  rows: {
+    "type": "object"
+  },
 });
 
 const ProjectModel = mongoose.model("Project", ProjectSchema);
