@@ -13,7 +13,7 @@ export default function NewTemplate() {
   const navigate = useNavigate();
 
   const [columnComponents, setColumnComponents] = useState([
-    { fieldValue: "", description: "", unit: "" },
+    { field: "", description: "", unit: "" },
   ]);
 
   const [projectName, setProjectName] = useState("");
@@ -22,12 +22,12 @@ export default function NewTemplate() {
   const onAddButtonClick = () => {
     setColumnComponents([
       ...columnComponents,
-      { fieldValue: "", description: "", unit: "" },
+      { field: "", description: "", unit: "" },
     ]);
   };
 
   const onResetButtonClick = () => {
-    setColumnComponents([{ fieldValue: "", description: "", unit: "" }]);
+    setColumnComponents([{ field: "", description: "", unit: "" }]);
     setProjectName("");
     setProjectDescription("");
   };

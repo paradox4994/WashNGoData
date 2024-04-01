@@ -41,7 +41,7 @@ const jsonData = async (filePath) => {
 };
 
 const saveProjects = async (req, res) => {
-  const { name, description, tag, userId, templateID } = req.body;
+  const { name, description, tag, chart, userId, templateID } = req.body;
   const filePath = req.file.path;
 
   const exists = await Project.findOne({ name });
@@ -56,6 +56,7 @@ const saveProjects = async (req, res) => {
       name,
       description,
       tag,
+      chart,
       userId,
       templateID,
       rows

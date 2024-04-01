@@ -1,0 +1,7 @@
+[
+  { "id": 0, "value": 30, "label": "Forest Area (%)" },
+  { "id": 1, "value": 20, "label": "Urban Area (%)" },
+  { "id": 2, "value": 15, "label": "Water Bodies (%)" },
+  { "id": 3, "value": 10, "label": "Agricultural Land (%)" },
+  { "id": 4, "value": 25, "label": "Other (%)" }
+]

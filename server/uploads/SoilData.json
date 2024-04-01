@@ -1,0 +1,98 @@
+[
+    {
+        "id": 1,
+        "Location": "Toronto",
+        "Nitrogen": 57.33,
+        "Phosphorus": 31.93,
+        "Potassium": 38.41,
+        "Calcium": 44.74,
+        "Magnesium": 19.53,
+        "Iron": 5.44,
+        "Copper": 0.59,
+        "Zinc": 2.36
+    },
+    {
+        "id": 2,
+        "Location": "Quebec City",
+        "Nitrogen": 48.23,
+        "Phosphorus": 20.02,
+        "Potassium": 36.79,
+        "Calcium": 39.12,
+        "Magnesium": 15.81,
+        "Iron": 4.23,
+        "Copper": 0.55,
+        "Zinc": 1.93
+    },
+    {
+        "id": 3,
+        "Location": "Montreal",
+        "Nitrogen": 53.79,
+        "Phosphorus": 34.18,
+        "Potassium": 38.73,
+        "Calcium": 39.7,
+        "Magnesium": 18.91,
+        "Iron": 6.87,
+        "Copper": 0.41,
+        "Zinc": 2.34
+    },
+    {
+        "id": 4,
+        "Location": "Halifax",
+        "Nitrogen": 53.18,
+        "Phosphorus": 32.48,
+        "Potassium": 45.65,
+        "Calcium": 43.12,
+        "Magnesium": 16.77,
+        "Iron": 4.23,
+        "Copper": 0.5,
+        "Zinc": 1.98
+    },
+    {
+        "id": 5,
+        "Location": "Winnipeg",
+        "Nitrogen": 58.92,
+        "Phosphorus": 23.07,
+        "Potassium": 39.46,
+        "Calcium": 38.52,
+        "Magnesium": 15.17,
+        "Iron": 4.08,
+        "Copper": 0.64,
+        "Zinc": 1.86
+    },
+    {
+        "id": 6,
+        "Location": "Vancouver",
+        "Nitrogen": 47.86,
+        "Phosphorus": 32.29,
+        "Potassium": 37.45,
+        "Calcium": 42.65,
+        "Magnesium": 17.3,
+        "Iron": 5.93,
+        "Copper": 0.52,
+        "Zinc": 2.05
+    },
+    {
+        "id": 7,
+        "Location": "Charlottetown",
+        "Nitrogen": 55.14,
+        "Phosphorus": 29.83,
+        "Potassium": 37.12,
+        "Calcium": 47.39,
+        "Magnesium": 15.35,
+        "Iron": 6.4,
+        "Copper": 0.6,
+        "Zinc": 1.99
+    },
+    {
+        "id": 8,
+        "Location": "Edmonton",
+        "Nitrogen": 42.79,
+        "Phosphorus": 33.9,
+        "Potassium": 39.16,
+        "Calcium": 39.35,
+        "Magnesium": 17.84,
+        "Iron": 6.38,
+        "Copper": 0.6,
+        "Zinc": 2.06
+    }
+]
