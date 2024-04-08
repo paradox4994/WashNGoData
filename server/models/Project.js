@@ -5,6 +5,7 @@ const ProjectSchema = new Schema({
   name: { type: String, required: true },
   description: String,
   tag: String,
+  chart: String,
   userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   templateID: {type: Schema.Types.ObjectId, ref: 'Template', required: true},
   createdAt: {

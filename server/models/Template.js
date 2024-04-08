@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const columnSchema = new Schema({
-  fieldValue: { type: String, required: true },
+  field: { type: String, required: true },
   description: String,
   unit: String,
 });

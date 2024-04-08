@@ -24,10 +24,13 @@ export default function ProjectInfo() {
 
   const [tempList, setTempList] = useState([]);
 
+  const chartList = ["Bar Chart", "Line Chart", "Pie Chart"]
+
   const [data, setData] = useState({
     name: "",
     description: "",
     tag: "",
+    chart: "",
     template: {},
     file: "",
   });
@@ -57,6 +60,7 @@ export default function ProjectInfo() {
       formData.append("name", data.name);
       formData.append("description", data.description);
       formData.append("tag", data.tag);
+      formData.append("chart",data.chart);
       formData.append("templateID", data.template);
       formData.append("userId", user.data.id);
       formData.append("file", data.file);
@@ -81,6 +85,10 @@ export default function ProjectInfo() {
     setData({ ...data, template: e.target.value });
   };
 
+  const handleChartChange = (e) => {
+    setData({ ...data, chart: e.target.value });
+  };
+
   const handleUpload = (e) => {
     setData({ ...data, file: e.target.files[0] });
   };
@@ -94,6 +102,7 @@ export default function ProjectInfo() {
       data.name &&
       data.description &&
       data.tag &&
+      data.chart &&
       data.template &&
       data.file
     ) {
@@ -151,14 +160,33 @@ export default function ProjectInfo() {
           value={data.description}
           onChange={(e) => setData({ ...data, description: e.target.value })}
         />
+        <Box>
         <TextField
           id="outlined-required"
           label="Tag"
           name="tagname"
-          sx={{ mt: 3 }}
+          sx={{ mt: 3, width: "40%" }}
           value={data.tag}
           onChange={(e) => setData({ ...data, tag: e.target.value })}
         />
+        <FormControl sx={{ mt: 3, ml: 3 , width: "40%" }}>
+          <InputLabel id="chart-select-label">Chart</InputLabel>
+          <Select
+            labelId="chart-select-label"
+            id="chart-select"
+            defaultValue=""
+            value={data.chart}
+            label="Chart"
+            onChange={handleChartChange}
+          >
+            {chartList.map((col, index) => (
+              <MenuItem value={col} key={index}>
+                {col}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        </Box>
         <FormControl sx={{ mt: 3 }}>
           <InputLabel id="template-select-label">Template</InputLabel>
           <Select

@@ -131,7 +131,9 @@ export default function Navbar() {
         </Container>
         <Container sx={{ display: "flex", justifyContent: "flex-end" }}>
           {user && user.role === "admin" ? (
-            <Button variant="contained" color="warning" sx={{ mx: 1 }}>
+            <Button variant="contained" color="warning" sx={{ mx: 1 }} onClick={() => {
+              navigate("/admin");
+            }}>
               Admin
             </Button>
           ) : null}

@@ -1,9 +1,12 @@
 import React from "react";
 import TableComp from "../../components/TableComp";
+import { useState } from "react";
+import ViewProjectInfo from '../../components/ViewProjectInfo'
 
 // MUI Imports
 import {
-  Grid,
+  Stack,
+  Container,
   List,
   ListItem,
   ListItemButton,
@@ -13,21 +16,27 @@ import {
 
 // MUI Icons
 import TableChartIcon from '@mui/icons-material/TableChart';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import EditNoteIcon from '@mui/icons-material/EditNote';
+import ProjectAnalysis from "../../components/ProjectAnalysis";
 
 
 export default function VIewProject() {
+
+  const [page, setPage] = useState(1)
+
+  const handlePageChange = (pageNumber) => {
+    setPage(pageNumber)
+  }
+
   return (
     <>
-    <Grid Container>
-      <Grid item xs={2}>
+    <Stack direction="row">
         <List
-          sx={{ borderRadius: 3, boxShadow: 5, ml: 2, my: 3, width: "25%" }}
+          sx={{ borderRadius: 3, boxShadow: 5, ml: 3, mt: 3, width: "15%" }}
         >
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => handlePageChange(1)}>
               <ListItemIcon>
                 <EditNoteIcon />
               </ListItemIcon>
@@ -35,23 +44,15 @@ export default function VIewProject() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => handlePageChange(2)}>
               <ListItemIcon>
                 <TableChartIcon />
               </ListItemIcon>
-              <ListItemText primary="Table" />
+              <ListItemText primary="Data" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => handlePageChange(3)}>
               <ListItemIcon>
                 <TimelineIcon />
               </ListItemIcon>
@@ -59,11 +60,21 @@ export default function VIewProject() {
             </ListItemButton>
           </ListItem>
         </List>
-      </Grid>
-      <Grid item xs={10}>
-          <TableComp/>
-      </Grid>
-    </Grid>
+        <Container
+          component="div"
+          sx={{
+            minHeight: "80vh",
+            width: "100%",
+            borderRadius: 3,
+            boxShadow: 5,
+            mt: 3,
+          }}
+        >
+          {page === 1 && <ViewProjectInfo/>}
+          {page === 2 && <TableComp/>}
+          {page === 3 && <ProjectAnalysis/>}
+        </Container>
+      </Stack>
   </>
   )
 }

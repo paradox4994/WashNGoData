@@ -21,9 +21,9 @@ export default function ColumnComponent ({vals, handleFormChange,index,removeFie
           margin="normal"
           id="outlined-required"
           label="Field Name"
-          name="fieldValue"
+          name="field"
           sx={{mb: 2}}
-          value={vals.fieldValue}
+          value={vals.field}
           onChange={(e) => handleFormChange(index,e)}
         />
         <TextField

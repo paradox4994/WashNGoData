@@ -1,32 +1,24 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { TableContext } from "../../context/tableContext";
 
 // Materials Import
 import { Button, Container, Box, Stack, Typography } from "@mui/material";
 
-// MUI Icons
-import AddIcon from "@mui/icons-material/Add";
-
-export default function Projects() {
+export default function Admin() {
   const navigate = useNavigate();
 
-  const { data, setData } = useContext(TableContext);
-
-  const [project, setProject] = useState([]);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
-    LoadProjects();
-  }, [project]);
+    LoadUsers();
+  }, [user]);
 
-  async function LoadProjects() {
+  async function LoadUsers() {
     try {
-      const resp = await axios.get("/profile");
-      const user = { userID: resp.data.id };
-      const res = await axios.post("/project", user);
-      setProject(res.data);
+      const resp = await axios.get("/admin");
+      setUser(resp.data);
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +26,7 @@ export default function Projects() {
 
   const onDeleteClicked = async (id) => {
     try {
-      const res = await axios.post("/project/deleteproject", { id: id });
+      const res = await axios.post("/admin/deleteuser", { id: id });
       toast.success(res.data.message);
     } catch (error) {
       console.log(error);
@@ -42,42 +34,27 @@ export default function Projects() {
   };
 
   const onViewClicked = async (id) => {
-    setData({
-      name: "",
-      description: "",
-      tag: "",
-      chart: "",
-      template: "",
-      file: "",
-    });
-    navigate("/viewproject", {
-      state: {
-        userId: id,
-      },
-    });
+    try {
+      const res = await axios.post("/admin/viewproject", { userId: id });
+      navigate('/adminproject',{
+        state: {
+          projects: res.data,
+        }
+      })
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <>
       <Stack direction="row">
         <Typography variant="h4" sx={{ px: 2, mt: 1 }}>
-          Projects
+          Users
         </Typography>
-        <Box sx={{ ml: "auto", px: 2, mt: 1 }}>
-          <Button
-            variant="contained"
-            color="success"
-            startIcon={<AddIcon />}
-            onClick={() => {
-              navigate("/newproject");
-            }}
-          >
-            Projects
-          </Button>
-        </Box>
       </Stack>
       <Stack spacing={2} sx={{ px: 2, mt: 2 }}>
-        {project.length == 0 ? (
+        {user.length == 0 ? (
           <Typography
             variant="h7"
             sx={{
@@ -86,10 +63,10 @@ export default function Projects() {
               alignContent: "center",
             }}
           >
-            No Projects Found
+            No Users Found
           </Typography>
         ) : (
-          project.map((item) => (
+          user.map((item) => (
             <Box
               key={item.name}
               sx={{
@@ -109,14 +86,6 @@ export default function Projects() {
                   </Typography>
                 </Container>
                 <Box sx={{ p: 2 }}>
-                  <Button
-                    variant="contained"
-                    onClick={() => {
-                      onViewClicked(item._id);
-                    }}
-                  >
-                    View
-                  </Button>
                 </Box>
                 <Box sx={{ p: 2 }}>
                   <Button
